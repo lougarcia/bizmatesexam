@@ -13115,9 +13115,30 @@ __webpack_require__.r(__webpack_exports__);
     this.prepareDaily();
   },
   methods: {
-    prepareDaily: function prepareDaily() {
-      console.log(moment__WEBPACK_IMPORTED_MODULE_0___default()(this.getFirstDay()).format('LL'));
+    chunk: function chunk(arr, len) {
+      var chunks = [],
+          i = 0,
+          n = arr.length;
+
+      while (i < n) {
+        chunks.push(arr.slice(i, i += len));
+      }
+
+      return chunks;
     },
+    prepareDaily: function prepareDaily() {
+      // console.log(moment(this.getFirstDay()).format('LL'));
+      // for (let i = 1; i <= 5; i++) {
+      // }
+      this.daily = this.chunk(this.forecasts, 8);
+      console.log(this.daily);
+      this.daily.map(function (day) {
+        day.map(function (hours) {
+          console.log(moment__WEBPACK_IMPORTED_MODULE_0___default()(hours.dt * 1000).format('LLLL'));
+        });
+      });
+    },
+    // Is this always a Monday?
     getFirstDay: function getFirstDay() {
       return new Date(parseInt(this.forecasts[0].dt) * 1000);
     }
