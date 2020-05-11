@@ -14,19 +14,33 @@
                     <div class="forecast-desc">{{currentWeather.weather[0].description}}</div>
                 </div>
             </div>
-            <div class="forecast flex-fill align-self-stretch">
+            <div class="flex-fill align-self-stretch">
                 <div class="sun p-1">
                     <fa-icon class="icon" :icon="['fas', 'sun']"/>
                     <span class="ml-1 sun-info">{{this.toTime(city.weatherData.city.sunrise)}} - {{this.toTime(city.weatherData.city.sunset)}}</span>
                 </div>
+                <WindComponent :wind="currentWeather.wind"/>
+                <HumidityComponent :humidity="currentWeather.main.humidity"/>
             </div>
+        </div>
+        <div class="d-flex justify-content-around">
+            <DailyForecastComponent :forecasts="city.weatherData.list"/>
         </div>
     </div>
 </template>
 
 <script>
+import WindComponent from './WindComponent';
+import HumidityComponent from './HumidityComponent';
+import DailyForecastComponent from './DailyForecastComponent';
+
 export default {
     name: 'view-city-component',
+    components: {
+        WindComponent,
+        HumidityComponent,
+        DailyForecastComponent,
+    },
     props: ['city'],
     data: function () {
         return {

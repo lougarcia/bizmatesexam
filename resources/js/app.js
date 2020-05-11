@@ -23,11 +23,11 @@ import Vue from 'vue';
 // Vue.component('example-component', require('./components/ExampleComponent.vue').default);
 
 import { library } from '@fortawesome/fontawesome-svg-core';
-import { faSun, faRedoAlt } from '@fortawesome/free-solid-svg-icons';
+import { faSun, faRedoAlt, faWind, faWater } from '@fortawesome/free-solid-svg-icons';
 import { faTrashAlt } from '@fortawesome/free-regular-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
 
-library.add(faSun, faRedoAlt, faTrashAlt);
+library.add(faSun, faRedoAlt, faTrashAlt, faWind, faWater);
 Vue.component('fa-icon', FontAwesomeIcon);
 
 import VueRouter from 'vue-router';

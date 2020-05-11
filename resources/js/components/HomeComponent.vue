@@ -1,6 +1,6 @@
 <template>
     <div>
-        <div class="row" :class="{'hide':selected_city}">
+        <div class="row" :class="{'hide': selected_city}">
             <div class="col col-6 mb-5" v-for="city in cities" :key="city.id">
                 <CityComponent :city="city" v-on:select-city="setSelectedCity($event, city)"/>
             </div>
