@@ -13,7 +13,7 @@ return [
 
     'foursquare_api_url' => env('FOURSQUARE_API_URL', ''),
     'foursquare_client_id' => env('FOURSQUARE_CLIENT_ID', ''),
-    'foursquare_client_secrets' => env('FOURSQUARE_CLIENT_SECRET', ''),
+    'foursquare_client_secret' => env('FOURSQUARE_CLIENT_SECRET', ''),
 
     /*
     |--------------------------------------------------------------------------

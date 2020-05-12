@@ -21,4 +21,6 @@ Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
 Route::get('/foursquare/{id}', 'FourSquareController@index')->name('foursquare');
+Route::get('/foursquare/photos/{id}', 'FourSquareController@photos')->name('foursquare.photos');
 Route::get('/openweathermap/{city}/{country}', 'OpenWeatherMapController@index')->name('openweathermap');
+
