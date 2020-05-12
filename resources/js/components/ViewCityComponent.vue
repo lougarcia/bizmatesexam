@@ -1,29 +1,28 @@
 <template>
-    <div class="p-4 border">
+    <div class="wrap p-4">
         <a @click="$emit('close-selected-city')">Close</a>
         <h3>{{city.name}}</h3>
         <div v-if="currentWeather" class="d-flex justify-content-around">
-            <div class="temp flex-fill mr-2">
-                <div class="text-center">
-                    <span class="temp-val">{{this.toCelcius(currentWeather.main.temp)}}<sup class="temp-unit">&deg;C</sup></span>
-                </div>
+            <div class="flex-fill mr-2 text-center">
+                <TemperatureComponent class="temp" :value="currentWeather.main.temp" :convertTo="'c'"/>
             </div>
-            <div class="forecast flex-fill mr-2 align-self-stretch">
-                <div class="text-center">
-                    <img :src="iconLink(currentWeather.weather[0].icon)" :title="currentWeather.weather[0].description" />
-                    <div class="forecast-desc">{{currentWeather.weather[0].description}}</div>
-                </div>
+            <div class="flex-fill mr-2 align-self-stretch text-center">
+                <WeatherIconComponent :icon="currentWeather.weather[0].icon" :text="currentWeather.weather[0].description"/>
             </div>
             <div class="flex-fill align-self-stretch">
                 <div class="sun p-1">
                     <fa-icon class="icon" :icon="['fas', 'sun']"/>
-                    <span class="ml-1 sun-info">{{this.toTime(city.weatherData.city.sunrise)}} - {{this.toTime(city.weatherData.city.sunset)}}</span>
+                    <span class="ml-1 sun-info">
+                        <DateTimeComponent :value="new Date(city.weatherData.city.sunrise * 1000)" :format="'LT'"/> -
+                        <DateTimeComponent :value="new Date(city.weatherData.city.sunset * 1000)" :format="'LT'"/>
+                    </span>
                 </div>
                 <WindComponent :wind="currentWeather.wind"/>
                 <HumidityComponent :humidity="currentWeather.main.humidity"/>
             </div>
         </div>
         <DailyForecastComponent :forecasts="city.weatherData.list"/>
+        <FoursquareComponent/>
     </div>
 </template>
 
@@ -31,6 +30,10 @@
 import WindComponent from './WindComponent';
 import HumidityComponent from './HumidityComponent';
 import DailyForecastComponent from './DailyForecastComponent';
+import WeatherIconComponent from './WeatherIconComponent';
+import DateTimeComponent from './DateTimeComponent';
+import TemperatureComponent from './TemperatureComponent';
+import FoursquareComponent from './FoursquareComponent';
 
 export default {
     name: 'view-city-component',
@@ -38,6 +41,10 @@ export default {
         WindComponent,
         HumidityComponent,
         DailyForecastComponent,
+        WeatherIconComponent,
+        DateTimeComponent,
+        TemperatureComponent,
+        FoursquareComponent,
     },
     props: ['city'],
     data: function () {
@@ -49,18 +56,6 @@ export default {
         this.currentWeather = this.setCurrentWeather();
     },
     methods: {
-        toTime(secs) {
-            const dt = new Date(secs * 1000);
-            let time = this.formatHour(dt.getHours()) + ':' + this.addZero(dt.getMinutes());
-            let ampm = (dt.getHours() >= 12) ? ' PM' : ' AM';
-            return time + ampm;
-        },
-        addZero(num) {
-            return num < 10 ? '0' + num : num;
-        },
-        formatHour(num) {
-            return num > 12 ? num - 12 : num
-        },
         setCurrentWeather() {
             console.log(this.city);
             // returns the first matching weather data
@@ -78,14 +73,28 @@ export default {
         toCelcius(num) {
             return parseInt(num - 273.15);
         },
-        iconLink(code) {
-            const url = process.env.MIX_OPENWEATHERMAP_ICON_URL;
-            return url + code + '@2x.png';
-        },
     }
 }
 </script>
 
 <style scoped>
+.wrap {
+    background-color: #023;
+    background: linear-gradient(135deg,  #006273 0%,#002233 100%);
+    color: #fff;
+}
+
+.wrap >>> .icon-desc {
+    margin-top: -1em;
+}
+
+.temp {
+    color: #fff;
+    font-size: 5em;
+}
+
+.temp sup {
+    font-size: 0.5em;
+}
 
 </style>

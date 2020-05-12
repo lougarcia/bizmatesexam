@@ -1,42 +1,44 @@
 <template>
-    <div>
-        <div class="city p-1" v-if="city" @click="$emit('select-city', {weatherData})">
-            <div class="p-1 tools text-right" style="color:white">
-                <fa-icon class="icon" :icon="['fas', 'redo-alt']" @click.stop="refreshCity()" />
-                <fa-icon class="ml-1 icon" :icon="['far', 'trash-alt']" @click.stop="deleteCity()"/>
-            </div>
-            <h3 class="px-3 pt-1 mb-0">{{city.name}}</h3>
-            <div class="p-3" v-if="weatherData">
-                <div class="mb-2">
-                    <div class="d-flex justify-content-around">
-                        <div class="temp flex-fill mr-2">
-                            <div class="text-center">
-                                <span class="temp-val">{{this.toCelcius(currentWeather.main.temp)}}<sup class="temp-unit">&deg;C</sup></span>
-                            </div>
-                        </div>
-                        <div class="forecast flex-fill align-self-stretch">
-                            <div class="text-center">
-                                <img :src="iconLink(currentWeather.weather[0].icon)" :title="currentWeather.weather[0].description" />
-                                <div class="forecast-desc">{{currentWeather.weather[0].description}}</div>
-                            </div>
-                        </div>
+    <div class="city p-1" v-if="city" @click="$emit('select-city', {weatherData})">
+        <div class="p-1 tools text-right" style="color:white">
+            <fa-icon class="icon" :icon="['fas', 'redo-alt']" @click.stop="refreshCity()" />
+            <fa-icon class="ml-1 icon" :icon="['far', 'trash-alt']" @click.stop="deleteCity()"/>
+        </div>
+        <h3 class="px-3 pt-1 mb-0">{{city.name}}</h3>
+        <div class="p-3" v-if="weatherData">
+            <div class="mb-2">
+                <div class="d-flex justify-content-around">
+                    <div class="temp flex-fill mr-2 text-center">
+                        <TemperatureComponent :value="currentWeather.main.temp" :convertTo="'c'"/>
+                    </div>
+                    <div class="forecast flex-fill align-self-stretch text-center">
+                        <WeatherIconComponent :icon="currentWeather.weather[0].icon" :text="currentWeather.weather[0].description"/>
                     </div>
                 </div>
-                <div class="sun p-1">
-                    <fa-icon class="icon" :icon="['fas', 'sun']"/>
-                    <span class="ml-1 sun-info">{{this.toTime(weatherData.city.sunrise)}} - {{this.toTime(weatherData.city.sunset)}}</span>
-                </div>
             </div>
-            <div v-else>Please wait...</div>
+            <div class="sun p-1">
+                <fa-icon class="icon" :icon="['fas', 'sun']"/>
+                <DateTimeComponent :value="new Date(weatherData.city.sunrise * 1000)" :format="'LT'"/> -
+                <DateTimeComponent :value="new Date(weatherData.city.sunset * 1000)" :format="'LT'"/>
+            </div>
         </div>
+        <div v-else>Please wait...</div>
     </div>
 </template>
 
 <script>
 import axios from 'axios';
+import WeatherIconComponent from './WeatherIconComponent';
+import TemperatureComponent from './TemperatureComponent';
+import DateTimeComponent from './DateTimeComponent';
 
 export default {
     name: 'city-component',
+    components: {
+        WeatherIconComponent,
+        TemperatureComponent,
+        DateTimeComponent,
+    },
     props: ['city'],
     data: function () {
         return {
@@ -45,9 +47,6 @@ export default {
         };
     },
     created() {
-
-    },
-    mounted() {
         axios.get(`/openweathermap/${this.city.name}/${this.city.country}`)
             .then((response) => {
                 this.weatherData = response.data;
@@ -55,18 +54,6 @@ export default {
             });
     },
     methods: {
-        toTime(secs) {
-            const dt = new Date(secs * 1000);
-            let time = this.formatHour(dt.getHours()) + ':' + this.addZero(dt.getMinutes());
-            let ampm = (dt.getHours() >= 12) ? ' PM' : ' AM';
-            return time + ampm;
-        },
-        addZero(num) {
-            return num < 10 ? '0' + num : num;
-        },
-        formatHour(num) {
-            return num > 12 ? num - 12 : num
-        },
         setCurrentWeather() {
             // returns the first matching weather data
             // based on current user time
@@ -79,12 +66,6 @@ export default {
             idx = idx > 0 ? idx-1 : 0;
 
             return this.weatherData.list[idx];
-        },
-        toCelcius(num) {
-            return parseInt(num - 273.15);
-        },
-        iconLink(code) {
-            return 'http://openweathermap.org/img/wn/' + code + '@2x.png';
         },
         refreshCity() {
             alert('refresh');
@@ -99,13 +80,12 @@ export default {
 <style scoped>
 .city {
     background-color: #023;
-    background-size: cover;
     cursor: pointer;
     background: linear-gradient(135deg,  #006273 0%,#002233 100%);
 }
 
 h3 {
-    color: white;
+    color: #fff;
     font-size: 2em;
 }
 
@@ -122,7 +102,7 @@ h3 {
 }
 
 .sun {
-    color: white;
+    color: #fff;
     font-size: 1em;
 }
 
@@ -131,28 +111,22 @@ h3 {
     vertical-align: middle;
 }
 
-.sun .sun-info {
+.sun >>> span {
     vertical-align: middle;
 }
 
-.temp {
-    color: white;
-}
-
-.temp .temp-val {
+.temp >>> span {
+    color: #fff;
     font-size: 5em;
 }
 
-.temp .temp-unit {
+.temp >>> sup {
     font-size: 0.5em;
 }
 
-.forecast {
-    color: white;
-}
-
-.forecast-desc {
+.forecast >>> .icon-desc {
     margin-top: -1em;
     text-transform: capitalize;
+    color: #fff;
 }
 </style>
