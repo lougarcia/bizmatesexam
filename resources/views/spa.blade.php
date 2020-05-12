@@ -19,7 +19,7 @@
 <body>
     <div id="app" class="main container">
         <header>
-            <h1 class="py-4">Japan Travel Map</h1>
+            <h1 class="py-4">Japan Weather Map</h1>
         </header>
         <router-view></router-view>
     </div>
