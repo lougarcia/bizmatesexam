@@ -2,7 +2,7 @@
     <div class="wrap p-4">
         <a @click="$emit('close-selected-city')">Close</a>
         <h3>{{city.name}}</h3>
-        <div v-if="currentWeather" class="d-flex justify-content-around">
+        <div v-if="currentWeather" class="d-flex justify-content-around mb-5">
             <div class="flex-fill mr-2 text-center">
                 <TemperatureComponent class="temp" :value="currentWeather.main.temp" :convertTo="'c'"/>
             </div>
@@ -21,7 +21,7 @@
                 <HumidityComponent :humidity="currentWeather.main.humidity"/>
             </div>
         </div>
-        <DailyForecastComponent :forecasts="city.weatherData.list"/>
+        <DailyForecastComponent class="daily" :forecasts="city.weatherData.list"/>
         <FoursquareComponent/>
     </div>
 </template>
@@ -86,6 +86,7 @@ export default {
 
 .wrap >>> .icon-desc {
     margin-top: -1em;
+    text-transform: capitalize;
 }
 
 .temp {
@@ -97,4 +98,7 @@ export default {
     font-size: 0.5em;
 }
 
+.daily >>> .datetime {
+    font-size: 1.5em;
+}
 </style>

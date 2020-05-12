@@ -1,8 +1,8 @@
 <template>
     <div v-if="dailySingle" class="d-flex justify-content-around">
         <div v-for="(day, index) in dailySingle" :key="index" class="text-center">
-            <DateTimeComponent :value="new Date(day.dt * 1000)" :format="'ddd'" />
-            <WeatherIconComponent :icon="day.weather[0].icon" :text="day.weather[0].description"/>
+            <DateTimeComponent class="datetime" :value="new Date(day.dt * 1000)" :format="'ddd'" />
+            <WeatherIconComponent class="icon" :icon="day.weather[0].icon" :text="day.weather[0].description"/>
         </div>
     </div>
 </template>

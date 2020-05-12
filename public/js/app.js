@@ -18100,7 +18100,7 @@ exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loa
 
 
 // module
-exports.push([module.i, "\n.wrap[data-v-3162b85c] {\r\n    background-color: #023;\r\n    background: linear-gradient(135deg,  #006273 0%,#002233 100%);\r\n    color: #fff;\n}\n.wrap[data-v-3162b85c] .icon-desc {\r\n    margin-top: -1em;\n}\n.temp[data-v-3162b85c] {\r\n    color: #fff;\r\n    font-size: 5em;\n}\n.temp sup[data-v-3162b85c] {\r\n    font-size: 0.5em;\n}\r\n\r\n", ""]);
+exports.push([module.i, "\n.wrap[data-v-3162b85c] {\r\n    background-color: #023;\r\n    background: linear-gradient(135deg,  #006273 0%,#002233 100%);\r\n    color: #fff;\n}\n.wrap[data-v-3162b85c] .icon-desc {\r\n    margin-top: -1em;\r\n    text-transform: capitalize;\n}\n.temp[data-v-3162b85c] {\r\n    color: #fff;\r\n    font-size: 5em;\n}\n.temp sup[data-v-3162b85c] {\r\n    font-size: 0.5em;\n}\n.daily[data-v-3162b85c] .datetime {\r\n    font-size: 1.5em;\n}\r\n", ""]);
 
 // exports
 
@@ -70943,10 +70943,12 @@ var render = function() {
             { key: index, staticClass: "text-center" },
             [
               _c("DateTimeComponent", {
+                staticClass: "datetime",
                 attrs: { value: new Date(day.dt * 1000), format: "ddd" }
               }),
               _vm._v(" "),
               _c("WeatherIconComponent", {
+                staticClass: "icon",
                 attrs: {
                   icon: day.weather[0].icon,
                   text: day.weather[0].description
@@ -71179,7 +71181,7 @@ var render = function() {
       _c("h3", [_vm._v(_vm._s(_vm.city.name))]),
       _vm._v(" "),
       _vm.currentWeather
-        ? _c("div", { staticClass: "d-flex justify-content-around" }, [
+        ? _c("div", { staticClass: "d-flex justify-content-around mb-5" }, [
             _c(
               "div",
               { staticClass: "flex-fill mr-2 text-center" },
@@ -71261,6 +71263,7 @@ var render = function() {
         : _vm._e(),
       _vm._v(" "),
       _c("DailyForecastComponent", {
+        staticClass: "daily",
         attrs: { forecasts: _vm.city.weatherData.list }
       }),
       _vm._v(" "),
