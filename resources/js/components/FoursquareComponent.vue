@@ -5,6 +5,9 @@
             <span class="ml-1">FOURSQUARE</span>
         </div>
         <FoursquareVenueComponent class="venue p-4 mb-2 border bg-light" v-for="venue in venues" :venue="venue" :key="venue.id"/>
+        <div class="preload text-center p-4" v-if="!venues.length">
+            Loading... Please wait....
+        </div>
     </div>
 </template>
 
@@ -29,7 +32,6 @@ export default {
             .then((response) => {
                 this.fs_data = response.data;
                 this.venues = response.data.response.venues;
-                console.log(this.venues);
             });
     },
     methods: {
@@ -49,5 +51,11 @@ export default {
 
 .venue >>> * {
     color: #333;
+}
+
+.preload {
+    color: #fff;
+    font-weight: bold;
+    opacity: 60%;
 }
 </style>

@@ -16326,6 +16326,9 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -16346,7 +16349,6 @@ __webpack_require__.r(__webpack_exports__);
     axios__WEBPACK_IMPORTED_MODULE_0___default.a.get("/foursquare/".concat(this.query)).then(function (response) {
       _this.fs_data = response.data;
       _this.venues = response.data.response.venues;
-      console.log(_this.venues);
     });
   },
   methods: {}
@@ -21264,7 +21266,7 @@ exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loa
 
 
 // module
-exports.push([module.i, "\n.brand[data-v-5582a75f] {\r\n    color: #fff;\n}\n.brand span[data-v-5582a75f] {\r\n    font-size: 2em;\r\n    font-weight: bold;\n}\n.venue[data-v-5582a75f] * {\r\n    color: #333;\n}\r\n", ""]);
+exports.push([module.i, "\n.brand[data-v-5582a75f] {\r\n    color: #fff;\n}\n.brand span[data-v-5582a75f] {\r\n    font-size: 2em;\r\n    font-weight: bold;\n}\n.venue[data-v-5582a75f] * {\r\n    color: #333;\n}\n.preload[data-v-5582a75f] {\r\n    color: #fff;\r\n    font-weight: bold;\r\n    opacity: 60%;\n}\r\n", ""]);
 
 // exports
 
@@ -74283,7 +74285,13 @@ var render = function() {
           staticClass: "venue p-4 mb-2 border bg-light",
           attrs: { venue: venue }
         })
-      })
+      }),
+      _vm._v(" "),
+      !_vm.venues.length
+        ? _c("div", { staticClass: "preload text-center p-4" }, [
+            _vm._v("\n        Loading... Please wait....\n    ")
+          ])
+        : _vm._e()
     ],
     2
   )
