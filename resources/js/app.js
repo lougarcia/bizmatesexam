@@ -25,9 +25,10 @@ import Vue from 'vue';
 import { library } from '@fortawesome/fontawesome-svg-core';
 import { faSun, faRedoAlt, faWind, faWater } from '@fortawesome/free-solid-svg-icons';
 import { faTrashAlt } from '@fortawesome/free-regular-svg-icons';
+import { faFoursquare } from '@fortawesome/free-brands-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
 
-library.add(faSun, faRedoAlt, faTrashAlt, faWind, faWater);
+library.add(faSun, faRedoAlt, faTrashAlt, faWind, faWater, faFoursquare);
 Vue.component('fa-icon', FontAwesomeIcon);
 
 import VueRouter from 'vue-router';
