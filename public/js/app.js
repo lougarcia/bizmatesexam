@@ -16592,8 +16592,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
 
 
 
@@ -21323,7 +21321,7 @@ exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loa
 
 
 // module
-exports.push([module.i, "\n.wrap[data-v-3162b85c] {\r\n    background-color: #023;\r\n    background: linear-gradient(135deg,  #006273 0%,#002233 100%);\r\n    color: #fff;\n}\n.wrap[data-v-3162b85c] .icon-desc {\r\n    margin-top: -1em;\r\n    text-transform: capitalize;\n}\n.temp[data-v-3162b85c] {\r\n    color: #fff;\r\n    font-size: 5em;\n}\n.temp sup[data-v-3162b85c] {\r\n    font-size: 0.5em;\n}\n.daily[data-v-3162b85c] .datetime {\r\n    font-size: 1.5em;\n}\n.seperator[data-v-3162b85c] {\r\n    width: 75%;\r\n    margin: 0 auto;\r\n    background: #fff;\r\n    opacity: 50%;\n}\r\n", ""]);
+exports.push([module.i, "\n.wrap[data-v-3162b85c] {\r\n    background-color: #023;\r\n    background: linear-gradient(135deg,  #006273 0%,#002233 100%);\r\n    color: #fff;\n}\n.wrap[data-v-3162b85c] .icon-desc {\r\n    margin-top: -1em;\r\n    text-transform: capitalize;\n}\n.currentWeather[data-v-3162b85c] {\r\n    opacity: 60%;\n}\n.temp[data-v-3162b85c] {\r\n    color: #fff;\n}\n.temp sup[data-v-3162b85c] {\r\n    font-size: 0.5em;\n}\n.daily[data-v-3162b85c] .datetime {\r\n    font-size: 1.5em;\n}\n.seperator[data-v-3162b85c] {\r\n    width: 75%;\r\n    margin: 0 auto;\r\n    background: #fff;\r\n    opacity: 50%;\n}\r\n", ""]);
 
 // exports
 
@@ -74487,27 +74485,33 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", [
-    _c(
-      "div",
-      { staticClass: "wrap p-4 mb-4" },
-      [
-        _c(
-          "a",
-          {
-            on: {
-              click: function($event) {
-                return _vm.$emit("close-selected-city")
-              }
+  return _c(
+    "div",
+    { staticClass: "wrap p-4 mb-4" },
+    [
+      _c(
+        "button",
+        {
+          staticClass: "float-right",
+          on: {
+            click: function($event) {
+              return _vm.$emit("close-selected-city")
             }
-          },
-          [_vm._v("Close")]
-        ),
-        _vm._v(" "),
-        _c("h3", [_vm._v(_vm._s(_vm.city.name))]),
-        _vm._v(" "),
-        _vm.currentWeather
-          ? _c("div", { staticClass: "d-flex justify-content-around mb-5" }, [
+          }
+        },
+        [_vm._v("Close")]
+      ),
+      _vm._v(" "),
+      _c("h3", [_vm._v(_vm._s(_vm.city.name))]),
+      _vm._v(" "),
+      _vm.currentWeather
+        ? _c(
+            "div",
+            {
+              staticClass:
+                "currentWeather d-flex justify-content-around mb-3 pt-4"
+            },
+            [
               _c(
                 "div",
                 { staticClass: "flex-fill mr-2 text-center" },
@@ -74523,17 +74527,51 @@ var render = function() {
                 1
               ),
               _vm._v(" "),
+              _c("div", { staticClass: "flex-fill align-self-stretch" }, [
+                _c(
+                  "div",
+                  { staticClass: "sun p-1" },
+                  [
+                    _c("fa-icon", {
+                      staticClass: "icon",
+                      attrs: { icon: ["fas", "sun"] }
+                    }),
+                    _vm._v(" "),
+                    _c(
+                      "span",
+                      { staticClass: "ml-1 sun-info" },
+                      [
+                        _c("DateTimeComponent", {
+                          attrs: {
+                            value: new Date(
+                              _vm.city.weatherData.city.sunrise * 1000
+                            ),
+                            format: "LT"
+                          }
+                        }),
+                        _vm._v(" -\n                    "),
+                        _c("DateTimeComponent", {
+                          attrs: {
+                            value: new Date(
+                              _vm.city.weatherData.city.sunset * 1000
+                            ),
+                            format: "LT"
+                          }
+                        })
+                      ],
+                      1
+                    )
+                  ],
+                  1
+                )
+              ]),
+              _vm._v(" "),
               _c(
                 "div",
-                {
-                  staticClass: "flex-fill mr-2 align-self-stretch text-center"
-                },
+                { staticClass: "flex-fill align-self-stretch" },
                 [
-                  _c("WeatherIconComponent", {
-                    attrs: {
-                      icon: _vm.currentWeather.weather[0].icon,
-                      text: _vm.currentWeather.weather[0].description
-                    }
+                  _c("WindComponent", {
+                    attrs: { wind: _vm.currentWeather.wind }
                   })
                 ],
                 1
@@ -74543,70 +74581,29 @@ var render = function() {
                 "div",
                 { staticClass: "flex-fill align-self-stretch" },
                 [
-                  _c(
-                    "div",
-                    { staticClass: "sun p-1" },
-                    [
-                      _c("fa-icon", {
-                        staticClass: "icon",
-                        attrs: { icon: ["fas", "sun"] }
-                      }),
-                      _vm._v(" "),
-                      _c(
-                        "span",
-                        { staticClass: "ml-1 sun-info" },
-                        [
-                          _c("DateTimeComponent", {
-                            attrs: {
-                              value: new Date(
-                                _vm.city.weatherData.city.sunrise * 1000
-                              ),
-                              format: "LT"
-                            }
-                          }),
-                          _vm._v(" -\n                        "),
-                          _c("DateTimeComponent", {
-                            attrs: {
-                              value: new Date(
-                                _vm.city.weatherData.city.sunset * 1000
-                              ),
-                              format: "LT"
-                            }
-                          })
-                        ],
-                        1
-                      )
-                    ],
-                    1
-                  ),
-                  _vm._v(" "),
-                  _c("WindComponent", {
-                    attrs: { wind: _vm.currentWeather.wind }
-                  }),
-                  _vm._v(" "),
                   _c("HumidityComponent", {
                     attrs: { humidity: _vm.currentWeather.main.humidity }
                   })
                 ],
                 1
               )
-            ])
-          : _vm._e(),
-        _vm._v(" "),
-        _c("DailyForecastComponent", {
-          staticClass: "daily mb-5",
-          attrs: { forecasts: _vm.city.weatherData.list }
-        }),
-        _vm._v(" "),
-        _c("hr", { staticClass: "seperator" }),
-        _vm._v(" "),
-        _c("FoursquareComponent", {
-          attrs: { query: _vm.city.name + "," + _vm.city.country }
-        })
-      ],
-      1
-    )
-  ])
+            ]
+          )
+        : _vm._e(),
+      _vm._v(" "),
+      _c("DailyForecastComponent", {
+        staticClass: "daily mb-5",
+        attrs: { forecasts: _vm.city.weatherData.list }
+      }),
+      _vm._v(" "),
+      _c("hr", { staticClass: "seperator" }),
+      _vm._v(" "),
+      _c("FoursquareComponent", {
+        attrs: { query: _vm.city.name + "," + _vm.city.country }
+      })
+    ],
+    1
+  )
 }
 var staticRenderFns = []
 render._withStripped = true

@@ -1,32 +1,30 @@
 <template>
-    <div>
-        <div class="wrap p-4 mb-4">
-            <a @click="$emit('close-selected-city')">Close</a>
-            <h3>{{city.name}}</h3>
-            <div v-if="currentWeather" class="d-flex justify-content-around mb-5">
-                <div class="flex-fill mr-2 text-center">
-                    <TemperatureComponent class="temp" :value="currentWeather.main.temp" :convertTo="'c'"/>
-                </div>
-                <div class="flex-fill mr-2 align-self-stretch text-center">
-                    <WeatherIconComponent :icon="currentWeather.weather[0].icon" :text="currentWeather.weather[0].description"/>
-                </div>
-                <div class="flex-fill align-self-stretch">
-                    <div class="sun p-1">
-                        <fa-icon class="icon" :icon="['fas', 'sun']"/>
-                        <span class="ml-1 sun-info">
-                            <DateTimeComponent :value="new Date(city.weatherData.city.sunrise * 1000)" :format="'LT'"/> -
-                            <DateTimeComponent :value="new Date(city.weatherData.city.sunset * 1000)" :format="'LT'"/>
-                        </span>
-                    </div>
-                    <WindComponent :wind="currentWeather.wind"/>
-                    <HumidityComponent :humidity="currentWeather.main.humidity"/>
+    <div class="wrap p-4 mb-4">
+        <button class="float-right" @click="$emit('close-selected-city')">Close</button>
+        <h3>{{city.name}}</h3>
+        <div v-if="currentWeather" class="currentWeather d-flex justify-content-around mb-3 pt-4">
+            <div class="flex-fill mr-2 text-center">
+                <TemperatureComponent class="temp" :value="currentWeather.main.temp" :convertTo="'c'"/>
+            </div>
+            <div class="flex-fill align-self-stretch">
+                <div class="sun p-1">
+                    <fa-icon class="icon" :icon="['fas', 'sun']"/>
+                    <span class="ml-1 sun-info">
+                        <DateTimeComponent :value="new Date(city.weatherData.city.sunrise * 1000)" :format="'LT'"/> -
+                        <DateTimeComponent :value="new Date(city.weatherData.city.sunset * 1000)" :format="'LT'"/>
+                    </span>
                 </div>
             </div>
-            <DailyForecastComponent class="daily mb-5" :forecasts="city.weatherData.list"/>
-            <hr class="seperator">
-            <FoursquareComponent :query="city.name+','+city.country"/>
+            <div class="flex-fill align-self-stretch">
+                <WindComponent :wind="currentWeather.wind"/>
+            </div>
+            <div class="flex-fill align-self-stretch">
+                <HumidityComponent :humidity="currentWeather.main.humidity"/>
+            </div>
         </div>
-        
+        <DailyForecastComponent class="daily mb-5" :forecasts="city.weatherData.list"/>
+        <hr class="seperator">
+        <FoursquareComponent :query="city.name+','+city.country"/>
     </div>
 </template>
 
@@ -93,9 +91,12 @@ export default {
     text-transform: capitalize;
 }
 
+.currentWeather {
+    opacity: 60%;
+}
+
 .temp {
     color: #fff;
-    font-size: 5em;
 }
 
 .temp sup {
