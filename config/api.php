@@ -26,4 +26,5 @@ return [
 
     'openweathermap_api_url' => env('OPENWEATHERMAP_API_URL', ''),
     'openweathermap_api_key' => env('OPENWEATHERMAP_API_KEY', ''),
+    'openweathermap_icon_url' => env('MIX_OPENWEATHERMAP_ICON_URL', ''),
 ];

@@ -1,57 +1,72 @@
 <template>
-    <div>
-        <div v-if="daily">
-            <div v-for="(day, index) in daily" :key="index">
-                {{day}}
-            </div>
+    <div v-if="dailySingle" class="d-flex justify-content-around">
+        <div v-for="(day, index) in dailySingle" :key="index" class="text-center">
+            <DateTimeComponent :value="new Date(day.dt * 1000)" :format="'ddd'" />
+            <WeatherIconComponent :icon="day.weather[0].icon" :text="day.weather[0].description"/>
         </div>
-    </div>    
+    </div>
 </template>
 
 <script>
 import moment from 'moment';
+import DateTimeComponent from './DateTimeComponent';
+import WeatherIconComponent from './WeatherIconComponent';
 
 export default {
     name: 'daily-forecast-component',
+    components: {
+        DateTimeComponent,
+        WeatherIconComponent,
+    },
     props: ['forecasts'],
     data: function () {
         return {
-            daily: null
+            dailyChunk: [],
+            dailySingle: [],
         };
     },
     mounted() {
-        this.prepareDaily();
+        // These logic relies so much on the API's data format
+        // I'm crossing my finger hoping they will not change
+        // while someone checks my codes T_T
+        this.dailyChunk = this.prepareDailyChunk();
+        this.dailySingle = this.prepareDailySingle();
     },
     methods: {
-        chunk (arr, len) {
+        prepareDailyChunk() {
+            let res = [];
+            let currentSelected = this.getFirstDay();
 
-            var chunks = [],
-                i = 0,
-                n = arr.length;
+            for (let i = 0; i < 5; i++) {
+                res[i] = [];
+                let filtered = this.forecasts.filter(item => {
+                    const dt = new Date(parseInt(item.dt) * 1000);
+                    return moment(dt).format('LL') == currentSelected.format('LL');
+                });
+                res[i].push(filtered);
+                currentSelected = currentSelected.add(1, 'days');
+            }
+            return res;
+        },
+        /**
+         * Prepares an array from the list based on the user's current time
+         */
+        prepareDailySingle() {
+            let res = [];
+            let currentSelected = this.getFirstDay();
 
-            while (i < n) {
-            chunks.push(arr.slice(i, i += len));
+            for (let i = 0; i < 5; i++) {
+                res[i] = this.forecasts.find(item => {
+                    const dt = new Date(parseInt(item.dt) * 1000);
+                    return moment(dt).format('LLL') == currentSelected.format('LLL');
+                });
+                currentSelected = currentSelected.add(1, 'days');
             }
 
-            return chunks;
+            return res;
         },
-        prepareDaily() {
-            // console.log(moment(this.getFirstDay()).format('LL'));
-            // for (let i = 1; i <= 5; i++) {
-                
-            // }
-            this.daily = this.chunk(this.forecasts, 8);
-
-            console.log(this.daily);
-            this.daily.map((day) => {
-                day.map((hours) => {
-                    console.log(moment(hours.dt * 1000).format('LLLL'));
-                });
-            });
-        },
-        // Is this always a Monday?
         getFirstDay() {
-            return new Date(parseInt(this.forecasts[0].dt) * 1000);
+            return moment(new Date(parseInt(this.forecasts[0].dt) * 1000));
         },
     }
 }

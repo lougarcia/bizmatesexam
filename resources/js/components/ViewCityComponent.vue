@@ -23,9 +23,7 @@
                 <HumidityComponent :humidity="currentWeather.main.humidity"/>
             </div>
         </div>
-        <div class="d-flex justify-content-around">
-            <DailyForecastComponent :forecasts="city.weatherData.list"/>
-        </div>
+        <DailyForecastComponent :forecasts="city.weatherData.list"/>
     </div>
 </template>
 
@@ -81,7 +79,8 @@ export default {
             return parseInt(num - 273.15);
         },
         iconLink(code) {
-            return 'http://openweathermap.org/img/wn/' + code + '@2x.png';
+            const url = process.env.MIX_OPENWEATHERMAP_ICON_URL;
+            return url + code + '@2x.png';
         },
     }
 }
